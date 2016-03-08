@@ -1,6 +1,6 @@
 # Configurar arquivos aqui
 INCLUDES=-I./include
-SOURCES=BFS.cpp SearchSolver.cpp Parameters.cpp main.cpp
+SOURCES=A.cpp BFS.cpp SearchSolver.cpp Parameters.cpp main.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
 BINARIES=solver
 

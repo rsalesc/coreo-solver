@@ -7,8 +7,8 @@
 using namespace std;
 
 pair<vector<int>, vector<int> > BFS::solve() {
-  // inicializa o conjunto de estados explorados
-  states = 0;
+  // inicializa o conjunto de estados vistos
+  states = 1;
   parent.clear();
 
   State initial = {"", 0, 0};
@@ -66,6 +66,7 @@ pair<vector<int>, vector<int> > BFS::solve() {
 
       if (parent.find(next) == parent.end()) {
         parent[next] = {cur, i};
+        states++;
         Q.push(next);
       }
     }

@@ -1,4 +1,5 @@
 
+#include "A.hpp"
 #include "BFS.hpp"
 #include "Parameters.hpp"
 #include "SearchSolver.hpp"
@@ -35,7 +36,10 @@ int main(int argc, char* argv[]) {
   vector<int> resa, resb;
   SearchSolver* solver;
 
-  solver = new BFS(a, b);
+  if (parameters.is_informed())
+    solver = new A(a, b);
+  else
+    solver = new BFS(a, b);
 
   tie(resa, resb) = solver->solve();
 
@@ -62,6 +66,13 @@ int main(int argc, char* argv[]) {
   for (unsigned i = 0; i < resb.size(); i++) {
     out << resb[i] << " \n"[i + 1 == resb.size()];
   }
+
+  // imprime ultimas linhas somente para debug
+  out << endl;
+  for (unsigned i = 0; i < resa.size(); i++) {
+    out << a[resa[i]];
+  }
+  out << endl;
 
   out.close();
 }
