@@ -57,9 +57,9 @@ pair<vector<int>, vector<int> > BFS::solve() {
 
       State next;
       if (matches == suffix_sz) { // a string detentora do sufixo comum muda
-        next = {s.substr(matches), addon, cur.length + matches};
+        next = {s.substr(matches), addon, 1};
       } else {
-        next = {cur.suffix.substr(matches), cur.current, cur.length + matches};
+        next = {cur.suffix.substr(matches), cur.current, 1};
       }
 
       // cout << next << endl;

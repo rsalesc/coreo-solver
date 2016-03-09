@@ -12,12 +12,12 @@ class SearchSolver {
   public:
   struct State {
     string suffix;
-    int current, length;
+    int current, nonempty;
 
     bool operator<(const State& rhs) const {
       if (suffix == rhs.suffix)
         if (current == rhs.current)
-          return length < rhs.length;
+          return nonempty < rhs.nonempty;
         else
           return current < rhs.current;
       else
@@ -27,8 +27,8 @@ class SearchSolver {
     bool operator==(const State& rhs) const { return !(*this < rhs) && !(rhs < *this); }
     friend ostream& operator<<(ostream&, const State&);
 
-    bool is_initial() { return suffix == "" && length == 0; }
-    bool is_final() { return suffix == "" && length > 0; }
+    bool is_initial() { return suffix == "" && nonempty == 0; }
+    bool is_final() { return suffix == "" && nonempty > 0; }
   };
 
   SearchSolver(){};

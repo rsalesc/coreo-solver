@@ -10,16 +10,20 @@ pair<vector<int>, vector<int> > A::solve() {
   // inicializa o conjunto de estados vistos
   states = 1;
   parent.clear();
+  dist.clear();
 
   State initial = {"", 0, 0};
   priority_queue<pair<int, State>, vector<pair<int, State> >, greater<pair<int, State> > > PQ;
   parent[initial] = make_pair(initial, -1);
+  dist[initial] = 0;
   PQ.push({0, initial});
 
   while (!PQ.empty()) {
     State cur;
+    int func;
     int cost;
-    tie(cost, cur) = PQ.top();
+    tie(func, cur) = PQ.top();
+    cost = dist[cur];
     // cout << cur.suffix << endl;
     PQ.pop();
 
@@ -58,17 +62,23 @@ pair<vector<int>, vector<int> > A::solve() {
         continue;
 
       State next;
+
       if (matches == suffix_sz) { // a string detentora do sufixo comum muda
-        next = {s.substr(matches), addon, cur.length + matches};
+        next = {s.substr(matches), addon, 1};
       } else {
-        next = {cur.suffix.substr(matches), cur.current, cur.length + matches};
+        next = {cur.suffix.substr(matches), cur.current, 1};
       }
+
+      int FC = cost + matches;
+      int FA = next.suffix.size();
 
       // cout << next << endl;
 
       if (parent.find(next) == parent.end()) {
         parent[next] = {cur, i};
-        PQ.push({next.length + next.suffix.size(), next});
+        dist[next] = FC;
+        PQ.push({FC + FA, next});
+        states++;
       }
     }
   }
