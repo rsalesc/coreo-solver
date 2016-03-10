@@ -16,6 +16,9 @@ SDIR = ./src/
 SRC = $(addprefix $(SDIR),$(SOURCES))
 OBJ = $(addprefix $(BDIR),$(OBJECTS))
 
+SRC_WILD = $(addprefix $(SDIR), %.cpp)
+OBJ_WILD = $(addprefix $(BDIR), %.o)
+
 make: $(BDIR) $(BINARIES)
 
 eco:
@@ -23,7 +26,7 @@ eco:
 	@echo $(SRC)
 	@echo $(INCLUDES)
 
-$(addprefix $(BDIR), %.o): $(addprefix $(SDIR), %.cpp)
+$(OBJ_WILD): $(SRC_WILD)
 	$(CC) $(INCLUDES) -c $< -o $@ $(CFLAGS)
 
 solver: $(OBJ)
