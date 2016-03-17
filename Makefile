@@ -13,6 +13,7 @@ LFLAGS = -lm
 
 BDIR = ./build/
 SDIR = ./src/
+TDIR = ./tests/
 SRC = $(addprefix $(SDIR),$(SOURCES))
 OBJ = $(addprefix $(BDIR),$(OBJECTS))
 
@@ -20,6 +21,12 @@ SRC_WILD = $(addprefix $(SDIR), %.cpp)
 OBJ_WILD = $(addprefix $(BDIR), %.o)
 
 make: $(BDIR) $(BINARIES)
+
+test: solver
+	#@mkdir $(TDIR)
+	#@mkdir $(TDIR)/in
+	#@mkdir $(TDIR)/out
+	./solver
 
 eco:
 	@echo $(OBJ)

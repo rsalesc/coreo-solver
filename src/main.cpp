@@ -8,7 +8,84 @@
 
 using namespace std;
 
+int get_solution_size(const vector<string> & s, const vector<int> & sol){
+  int res = 0;
+  for(int x: sol) res += s[x].size();
+  return res;
+}
+
+/**
+  Função responsável por executar testes e gerar estatísticas.
+*/
+void test(){
+  srand(42);
+  const int COUNT = 5;
+  const char chars[] = {'a', 'd', 'e', 'm', 'p'};
+  const int TESTCOUNT = 1000000;
+  const int MAXSEQ = 10;
+  const int MAXCHAR = 4;
+
+  int sv_BFS = 0, sv_A = 0;
+  int sz_BFS = 0, sz_A = 0;
+  int SUCCESS = 0;
+
+  for(int i = 0; i < TESTCOUNT; i++){
+    int sa = rand() % MAXSEQ + 1;
+    int sb = rand() % MAXSEQ + 1;
+    vector<string> a, b;
+
+    for(int j = 0; j < sa; j++){
+      int sz = rand() % MAXCHAR + 2;
+      string res;
+      for(int k = 0; k < sz; k++){
+        res += chars[rand()%COUNT];
+      }
+
+      // cout << res << endl;
+      a.push_back(res);
+    }
+
+    for(int j = 0; j < sb; j++){
+      int sz = rand() % MAXCHAR + 4;
+      string res;
+      for(int k = 0; k < sz; k++){
+        res += chars[rand()%COUNT];
+      }
+
+      //cout << res << endl;
+      b.push_back(res);
+    }
+
+    BFS solver1(a,b);
+    pair<vector<int>, vector<int>> sol1 = solver1.solve();
+    sv_BFS += solver1.states;
+    sz_BFS += get_solution_size(a, sol1.first);
+
+    A solver2(a,b);
+    pair<vector<int>, vector<int>> sol2 = solver2.solve();
+    sv_A += solver2.states;
+    sz_A += get_solution_size(a, sol2.first);
+
+    SUCCESS += sol1.first.size() > 0;
+  }
+
+  cout << "BFS: " << endl;
+  cout << 1.0*sv_BFS/SUCCESS << " " << 1.0*sz_BFS/SUCCESS << endl << endl;
+  cout << "A*: " << endl;
+  cout << 1.0*sv_A/SUCCESS << " " << 1.0*sz_A/SUCCESS << endl << endl;
+
+  cout << "SUCCESS: " << SUCCESS << endl;
+  cout << "FAILS: " << TESTCOUNT-SUCCESS << endl;
+}
+
 int main(int argc, char* argv[]) {
+
+  // se não houverem argumentos, gera testes aleatórios e executa
+  if(argc == 1){
+    test();
+    return 0;
+  }
+
   Parameters parameters(argc, argv);
 
   vector<string> a, b;

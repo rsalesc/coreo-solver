@@ -10,7 +10,7 @@ using namespace std;
 */
 class BFS : public SearchSolver {
   private:
-  int states;
+
 
   /**
     Armazena o pai de cada estado explorado na árvore de busca.
@@ -20,6 +20,7 @@ class BFS : public SearchSolver {
   public:
   BFS(const vector<string>& a, const vector<string>& b) : SearchSolver(a, b) { states = 0; }
 
+  int states;
   /**
     Resolve o problema usando busca em largura.
     @return um par de vetores de inteiros: as sequências resultantes de cada
