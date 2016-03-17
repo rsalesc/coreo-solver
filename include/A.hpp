@@ -17,6 +17,7 @@ class A : public SearchSolver {
     Armazena o pai de cada estado explorado na árvore de busca.
   */
   map<State, pair<State, int> > parent;
+  vector<int> resa, resb;
 
   /**
     Armazena o custo de cada estado explorado.

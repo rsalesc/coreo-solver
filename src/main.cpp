@@ -1,8 +1,9 @@
 
+#include "SearchSolver.hpp"
 #include "A.hpp"
 #include "BFS.hpp"
+#include "DFS.hpp"
 #include "Parameters.hpp"
-#include "SearchSolver.hpp"
 #include <fstream>
 #include <iostream>
 
@@ -20,16 +21,18 @@ int get_solution_size(const vector<string> & s, const vector<int> & sol){
 void test(){
   srand(42);
   const int COUNT = 5;
-  const char chars[] = {'a', 'd', 'e', 'm', 'p'};
-  const int TESTCOUNT = 1000000;
-  const int MAXSEQ = 10;
-  const int MAXCHAR = 4;
+  const char chars[] = {'a', 'd', 'e', 'm'}; // ademp
+  const int TESTCOUNT = 1000;
+  const int MAXSEQ = 2500;
+  const int MAXCHAR = 750;
 
-  int sv_BFS = 0, sv_A = 0;
-  int sz_BFS = 0, sz_A = 0;
+  int sv_BFS = 0, sv_A = 0, sv_DFS = 0;
+  int sz_BFS = 0, sz_A = 0, sz_DFS = 0;
   int SUCCESS = 0;
 
   for(int i = 0; i < TESTCOUNT; i++){
+    if(i && i % 50 == 0)
+      cout << i << " tests processed..." << endl;
     int sa = rand() % MAXSEQ + 1;
     int sb = rand() % MAXSEQ + 1;
     vector<string> a, b;
@@ -66,9 +69,16 @@ void test(){
     sv_A += solver2.states;
     sz_A += get_solution_size(a, sol2.first);
 
+    /*DFS solver3(a,b);
+    pair<vector<int>, vector<int>> sol3 = solver3.solve();
+    sv_DFS += solver3.states;
+    sz_DFS += get_solution_size(a, sol3.first);*/
+
     SUCCESS += sol1.first.size() > 0;
   }
 
+  cout << endl;
+  cout << "Avg number of visited states / Avg size of the solution" << endl;
   cout << "BFS: " << endl;
   cout << 1.0*sv_BFS/SUCCESS << " " << 1.0*sz_BFS/SUCCESS << endl << endl;
   cout << "A*: " << endl;
